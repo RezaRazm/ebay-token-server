@@ -1,50 +1,20 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 import requests
 import base64
 import os
 
 app = Flask(__name__)
 
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
+# Your eBay production credentials
+CLIENT_ID = "RezaRazm-Sanbox-PRD-4abfbb41d-bb26fcf4"
+CLIENT_SECRET = "PRD-476d66721f2d-b88b-48c3-90e5-da59"
+REFRESH_TOKEN = "v^1.1#i^1#r^1#p^3#f^0#I^3#t^Ul4xMF8xMDozMzdFMDhBN0RFNkUyRTBFNDYzNjMxNTM3QzgzOTJGOV8xXzEjRV4yNjA="
 TOKEN_URL = "https://api.ebay.com/identity/v1/oauth2/token"
 
-# eBay full scope set: All Selling + Buying APIs
+# ✅ Safe, minimal set of scopes for testing
 SCOPES = [
     "https://api.ebay.com/oauth/api_scope",
-    "https://api.ebay.com/oauth/api_scope/buy.marketing",
-    "https://api.ebay.com/oauth/api_scope/buy.product.feed",
-    "https://api.ebay.com/oauth/api_scope/buy.product.identification",
-    "https://api.ebay.com/oauth/api_scope/buy.product.summary",
-    "https://api.ebay.com/oauth/api_scope/buy.item.feed",
-    "https://api.ebay.com/oauth/api_scope/buy.item.summary",
-    "https://api.ebay.com/oauth/api_scope/buy.item.auction",
-    "https://api.ebay.com/oauth/api_scope/buy.item",
-    "https://api.ebay.com/oauth/api_scope/buy.guest.order",
-    "https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly",
-    "https://api.ebay.com/oauth/api_scope/commerce.identity.readonly",
-    "https://api.ebay.com/oauth/api_scope/commerce.identity.email.readonly",
-    "https://api.ebay.com/oauth/api_scope/commerce.notification.subscription",
-    "https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.account",
-    "https://api.ebay.com/oauth/api_scope/sell.account.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.inventory",
-    "https://api.ebay.com/oauth/api_scope/sell.inventory.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.fulfillment",
-    "https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.payment.dispute",
-    "https://api.ebay.com/oauth/api_scope/sell.reputation",
-    "https://api.ebay.com/oauth/api_scope/sell.reputation.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.analytics.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.marketing",
-    "https://api.ebay.com/oauth/api_scope/sell.marketing.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.finances",
-    "https://api.ebay.com/oauth/api_scope/sell.stores",
-    "https://api.ebay.com/oauth/api_scope/sell.stores.readonly",
-    "https://api.ebay.com/oauth/api_scope/sell.negotiation",
-    "https://api.ebay.com/oauth/api_scope/sell.metadata",
-    "https://api.ebay.com/oauth/api_scope/sell.edelivery"
+    "https://api.ebay.com/oauth/api_scope/sell.inventory"
 ]
 
 @app.route("/get-token", methods=["GET"])
@@ -66,5 +36,5 @@ def get_token():
         return jsonify({"error": "Failed to refresh token", "details": response.text}), response.status_code
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5050))
     app.run(debug=True, host="0.0.0.0", port=port)
